@@ -1,0 +1,86 @@
+.iframeContainer {
+  padding: 20px;
+  border: 1px solid #e3e3e3;
+}
+
+/* Sticky Footer rules (https://getbootstrap.com/examples/sticky-footer/) */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Padding bottom by footer height */
+  padding-bottom: 80px;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%; /* Set the fixed height of the footer here */
+  height: 10px;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  text-align: center;
+  background-color: #f5f5f5;
+}
+.tooltip {
+  position: absolute;
+  width: 160px;
+  height: 50px;
+  padding: 10px;
+  font: 9px sans-serif;
+  text-align: center;
+  text-transform: capitalize;
+  color: white;
+  background: black;
+  border: 0;
+  border-radius: 10px;
+}
+
+.active {
+  font-weight: bold;
+  font-size: 12px;
+  /* background-color: black; */
+  fill: #fff;
+  /* fill: #551aaf; */
+  transition: fill 0.3s ease-out;
+  text-anchor: middle;
+}
+
+.inactive {
+  font-weight: lighter;
+  font-size: 12px;
+  fill: #551aaf;
+  transition: fill 0.3s ease-out;
+  text-anchor: middle;
+}
+
+.inactive:hover {
+  fill: #e75480;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+#footer p {
+  margin: 0;
+  font-size: 16px;
+}
+.axis-text {
+  font-family: sans-serif;
+  font-weight: bold;
+  fill: #551aaf;
+  text-anchor: middle;
+}
+
+.scatter-point{
+  fill : rgba(255, 153, 0, 0.712);
+  border-color:gray;
+  border-width:0.75px;
+  
+}
+.scatter-txt{
+  font-size:7px;
+  color:white;
+  font-weight:bold;
+}
