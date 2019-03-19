@@ -151,6 +151,7 @@ cirGrp.on("mouseover", function(d) {
   });
 } ;
 
+
 function renderXlabels(chartGroup){  
   // Create objects for x labels
   var xLblsGrp = chartGroup.append("g")             
@@ -384,6 +385,8 @@ function renderPlot(xParam = "poverty", yParam = "healthcare"){
       // Render x and y labels
       var xLblsGrp = renderXlabels(chartGroup);
       var yLblsGrp = renderYlabels(chartGroup);
+
+      
 
       // Render Plot Explanation
       togglePlotExplanation(xParam);

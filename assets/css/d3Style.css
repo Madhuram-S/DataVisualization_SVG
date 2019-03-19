@@ -51,11 +51,10 @@
   margin: 0;
 }
 
-
 .svg-container { 
 	display: inline-block;
 	position: relative;
-  width: 100%;
+  width: 83%;
   height:60%;
 	padding-bottom: 70%; 
 	vertical-align: middle; 
@@ -63,11 +62,12 @@
 }
 
 .svg-content { 
-	display: inline-block;
+	display: block;
   position: absolute;
+  width:100%;
   /* background-color: rgba(180, 179, 177, 0.712); */
 	top: 0;
-	left: 0;
+	left: 0px;
 }
 
 .tooltip {
@@ -98,18 +98,28 @@
 .article ul li{
   font-size: 11px;
 }
+
+#plot-explain{
+  background-color: #333333;
+  padding-top:5px;
+  padding-right:120px; 
+  margin: 2px 0px 0px 0px;
+  font-size:10px;
+}
+
+
 .p_active{
-  display:inline-block;
+  display:block;
   color:#f5f5f5;
   background-color: #333333;
-  padding:10px;
-  margin: 10px 00px 0px 0px;
+  /* padding:10px; */
+  /* margin: 10px 00px 0px 0px;  */
 }
 .p_inactive{
   display:none;
 }
 
-/* Mobile Rules
+/* Mobile Rules */
 @media screen and (max-width: 530px) {
   .stateText {
     display: none;
@@ -118,10 +128,32 @@
   .aText {
     font-size: 14px;
   }
+
+  
+  #plot-explain{
+    background-color: #333333;
+    padding-top:5px;
+    padding-right:120px; 
+    margin: 2px 0px 0px 0px;
+    font-size:10px;
+  }
+
+
+
 }
 
 @media screen and (max-width: 400px) {
   .aText {
     font-size: 13px;
   }
-} */
+  
+#plot-explain{
+  background-color: #333333;
+  padding-top:5px;
+  padding-right:120px; 
+  margin: 2px 0px 0px 0px;
+  font-size:8px;
+}
+
+
+}
