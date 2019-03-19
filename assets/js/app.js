@@ -4,8 +4,8 @@ var svgHeight = 500;
 
 // Define the chart's margins as an object
 var margin = {
-  top: 60,
-  right: 60,
+  top: 10,
+  right: 30,
   bottom: 120,
   left: 100
 };
@@ -33,7 +33,7 @@ function createSVGArea(){
    d3.select("#scatter")
     .append("svg")
     .attr("preserveAspectRatio", "xMinYMin meet")
-    .attr("viewBox","0 0 690 510")
+    .attr("viewBox","0 0 700 700")
     .attr("class", "svg-content")
     // .attr("height", svgHeight)
     // .attr("width", svgWidth)
@@ -156,32 +156,35 @@ function renderXlabels(chartGroup){
   var xLblsGrp = chartGroup.append("g")             
   .attr("transform",
         "translate(" + (chartWidth/2) + " ," + 
-                      (chartHeight + margin.top-20) + ")");
+                      (chartHeight + margin.top+5) + ")");
   
 
   xLblsObj["poverty"] = xLblsGrp.append("text")
     .attr("x", 0)
     .attr("y", 20)
     .attr("value", "poverty") // value to grab for event listener
+    .classed("aText", true)
     .classed("active", true)
     .style("text-anchor", "middle")
     .text("In Poverty (%)");
 
     xLblsObj["age"] = xLblsGrp.append("text")
     .attr("x", 0)
-    .attr("y", 40)
+    .attr("y", 35)
     .attr("value", "age") // value to grab for event listener
+    .classed("aText", true)
     .classed("inactive", true)
     .style("text-anchor", "middle")
-    .text("Age (Median)");
+    .text("Median Age (Yrs)");
 
     xLblsObj["income"] = xLblsGrp.append("text")
     .attr("x", 0)
-    .attr("y", 60)
+    .attr("y", 50)
     .attr("value", "income") // value to grab for event listener
+    .classed("aText", true)
     .classed("inactive", true)
     .style("text-anchor", "middle")
-    .text("Income (Median)");
+    .text("Median Income (USD)");
 
     return xLblsGrp;
 
@@ -194,25 +197,28 @@ function renderYlabels(chartGroup){
   .attr("transform", "rotate(-90)")  
 
   yLblsObj["healthcare"] = yLblsGrp.append("text")
-    .attr("y", 0 - margin.left + 50)
+    .attr("y", 0 - margin.left + 60)
     .attr("x",0 - (chartHeight / 2))
     .attr("dy", "1em")
     .style("text-anchor", "middle")
     .attr("value", "healthcare") // value to grab for event listener
+    .classed("aText", true)
     .classed("active", true)
     .text("Lacks Healthcare (%)");
 
     yLblsObj["smokes"] = yLblsGrp.append("text")
-    .attr("y", 0 - margin.left + 40)
+    .attr("y", 0 - margin.left + 55)
     .attr("x",0 - (chartHeight / 2))
     .attr("value", "smokes") // value to grab for event listener
+    .classed("aText", true)
     .classed("inactive", true)
     .text("Smokes (%)");
 
     yLblsObj["obesity"] = yLblsGrp.append("text")
-    .attr("y", 0 - margin.left +20)
+    .attr("y", 0 - margin.left +37)
     .attr("x",0 - (chartHeight / 2))
     .attr("value", "obesity") // value to grab for event listener
+    .classed("aText", true)
     .classed("inactive", true)
     .text("Obsese (%)");
 
@@ -341,12 +347,12 @@ function renderPlot(xParam = "poverty", yParam = "healthcare"){
       // Append x and y axis to the plot
       var xAxis = chartGroup.append("g")
       .attr("transform", `translate(0, ${chartHeight})`)
-      .attr("stroke", "gray") //give gray colored text
+      .attr("class", "tickLabel")
       .call(bottomAxis);
 
       // Left YAxis append - Dow Index
       var yAxis = chartGroup.append("g")
-      .attr("stroke", "gray") //give gray colored text
+      .attr("class", "tickLabel")       
       .call(leftAxis);
       
       // Scatter plot : append circles to data points

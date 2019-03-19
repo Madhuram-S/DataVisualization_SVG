@@ -22,25 +22,25 @@
 
 <body>
   <div class="container">
-    <div class="row">
+    <div class="row" id="header">
       <div class="col-xs-12 col-md-12">
-        <h1>D3Times</h1>
+        <h1 class="header">D3Times</h1>
       </div>
     </div>
     <div class="row">
-      <div class="col-xs-12  col-md-12 col-lg-12">
+      <div class="col-xs-12  col-md-9 col-lg-9">
         <div id="scatter" class="svg-container">
           <!-- We append our chart here. -->
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12  col-md-12 col-lg-12">
-        <div class="article" id="plot-explain">
-          <h4>Correlations Discovered Between Poverty, Age and Income on Healthcare coverage, Smoker% and Obseity%</h4>
-          <div id="poverty">
+    <!-- </div>
+    <div class="row"> -->
+      <div class="col-xs-12  col-md-3 col-lg-3">
+        <div class="article" id="plot-explain">          
+          <div id="poverty" style="font-size:11px;">
+              <h5>Impact of Poverty on Healthcare, Smoker% and Obseity%</h5>
             <ul>
-              <li><h6>Poverty % across 51 states varies from <strong>9.2% from 21.5%</strong></h6></li>
+              <li><h6>Poverty % varies from <strong>9.2% from 21.5%</strong>across 51 states </h6></li>
               <li>Poverty % vs. Lack of Healthcare has <em>postive correlation of 0.525</em> derived using Pearson method</li>
               <li>Lack of healthcare coverage increases from 4.6% to a max of 24.9%</li>  
               <li>Poverty % vs. Smoker % is having a <em>postive correlation of 0.520</em> using Pearson method</li>
@@ -49,7 +49,8 @@
               <li>% of smokers increases from 21.3% to a max of 35.9% as poverty % increases</li>                  
             </ul>
           </div>
-          <div id="age">              
+          <div id="age"> 
+              <h5>How does age correlate with availability of Healthcare, Smoker% and Obseity% ?</h5>             
               <ul>
                   <li><h6>Population Median age across 51 states varies from <strong>30.5 from 44.1 years</strong></h6></li>
                   <li>Median Age vs. Lack of Healthcare depicts a negative correlation of -0.385 using Pearson method</li>
@@ -59,6 +60,7 @@
               </ul>
               </div>
           <div id="income">
+              <h5>Correlations Discovered Between Income on Healthcare coverage, Smoker% and Obseity%</h5>
             <ul>
               <li><h6>Population Median income across 51 states varies from <strong>$39680 to $73971</strong></h6></li>
               <li>Median Income vs. Lack of Healthcare shows a <em>negative correlation of -0.434</em> using Pearson method</li>
