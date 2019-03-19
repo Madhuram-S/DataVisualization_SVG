@@ -18,6 +18,9 @@ var chartHeight = svgHeight - margin.top - margin.bottom;
 var xLblsObj = {};
 var yLblsObj = {};
 
+// Select the object for all p tags
+var p_obj = d3.select("#plot-explain").selectAll("p");
+
 function createSVGArea(){
   // if the SVG area isn't empty when the browser loads, remove it
   // and replace it with a resized version of the chart
@@ -29,9 +32,12 @@ function createSVGArea(){
   return (
    d3.select("#scatter")
     .append("svg")
-    .attr("height", svgHeight)
-    .attr("width", svgWidth))
-
+    .attr("preserveAspectRatio", "xMinYMin meet")
+    .attr("viewBox","0 0 690 510")
+    .attr("class", "svg-content")
+    // .attr("height", svgHeight)
+    // .attr("width", svgWidth)
+  )
 };
 
 function createSVG_GRP(svgObj){ 
@@ -215,6 +221,44 @@ function renderYlabels(chartGroup){
 
 };
 
+function togglePlotExplanation(chosenXAxis){
+  switch(chosenXAxis){
+    case "age":
+      d3.select(`#age`)
+        .classed("p_active", true)
+        .classed("p_inactive", false);
+      d3.select(`#income`)
+        .classed("p_active", false)
+        .classed("p_inactive", true);
+      d3.select(`#poverty`)
+        .classed("p_active", false)
+        .classed("p_inactive", true);
+      break;
+    case "income":
+    d3.select(`#age`)
+    .classed("p_active", false)
+    .classed("p_inactive", true);
+    d3.select(`#income`)
+      .classed("p_active", true)
+      .classed("p_inactive", false);
+    d3.select(`#poverty`)
+      .classed("p_active", false)
+      .classed("p_inactive", true);
+      break;
+    case "poverty":
+      d3.select(`#age`)
+      .classed("p_active", false)
+      .classed("p_inactive", true);
+      d3.select(`#income`)
+        .classed("p_active", false)
+        .classed("p_inactive", true);
+      d3.select(`#poverty`)
+        .classed("p_active", true)
+        .classed("p_inactive", false);
+  }
+
+}
+
 function updatePlot(inputData,xParam, yParam, xAxis, yAxis, circlesGroup, circleTxtGrp ){
     // updates x & y scale for new data
     xNewScale = renderXScale(inputData, xParam);
@@ -230,6 +274,9 @@ function updatePlot(inputData,xParam, yParam, xAxis, yAxis, circlesGroup, circle
 
     // updates tooltips with new info
     renderToolTip(circlesGroup, xParam, yParam);
+
+    // Render Plot Explanations
+    togglePlotExplanation(xParam);
 
     // changes classes to change bold text
     Object.entries(xLblsObj).map(([key,value]) => 
@@ -331,7 +378,11 @@ function renderPlot(xParam = "poverty", yParam = "healthcare"){
       // Render x and y labels
       var xLblsGrp = renderXlabels(chartGroup);
       var yLblsGrp = renderYlabels(chartGroup);
-      
+
+      // Render Plot Explanation
+      togglePlotExplanation(xParam);
+        // p_obj.map((key, value) => console.log(key));
+        
       // Listen to on-click event labels
       // x axis labels event listener
       xLblsGrp.selectAll("text")
@@ -370,6 +421,6 @@ function renderPlot(xParam = "poverty", yParam = "healthcare"){
     console.log("in error");
   });
 
-}
+};
 
 renderPlot("poverty","healthcare");
