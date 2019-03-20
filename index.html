@@ -28,87 +28,58 @@
       </div>
     </div>
     <div class="row" id="plot-explain">
+      <!-- Section that provides detail on the SVG plot displayed -->
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div class="article">          
-            <div id="poverty" style="font-size:11px;">  
-                <div class = "row">
-                  <div class = "col-xs-7 col-md-7 col-lg-7">
+            <div id="poverty" style="font-size:11px;">                
+                <div class ="row">
+                  <div class="col-xs-12 col-md-7 col-lg-7">
                       <h6>Impact of Poverty on lack of Healthcare, Smoker % and Obseity %</h6>
-                      <ul><li>Poverty % varies from <strong>9.2% from 21.5%</strong>across 51 states</li></ul>
+                    <ul>
+                      <li>Poverty % varies from <strong>9.2% from 21.5%</strong> across 51 states</li>
+                      <li>The US average is at 14.9% with New Hampshire at the lower end and Missippi at higher end</li>
+                    </ul>                    
                   </div>
-                  <div class = "col-xs-5 col-md-5 col-lg-5">
-                    <table class="table table-striped table-sm">
-                      <thead>
-                        <th>Correlation ( Adj. r<sup>2</sup>)</th>
-                        <th>Lacks Healthcare</th>
-                        <th>Smoker %</th>
-                        <th>Obese %</th>
-                      </thead>
-                      <tbody>
-                        <td>Poverty %</td>
-                        <td>+0.525</td>
-                        <td>+0.520</td>
-                        <td>+0.462</td>
-                      </tbody>
-                    </table>
+                  <div class = "col-xs-12 col-md-5 col-lg-5">
+                    <ul>
+                        <li>A positive correlation exist between Povetry and 3 Y-axis factors (healthcare, smoker rate and Obesity % )</li>
+                        <li>Using Pearson method we see that r<sup>2</sup> values are 0.525, 0.520 and 0.462 for healthcare, smoker % and Obese% respectively</li>
+                    </ul>
                   </div>
                 </div>
-              <!-- <ul>
-                <li></li>
-                <li>Poverty % vs. Lack of Healthcare has <em>postive correlation of 0.525</em> derived using Pearson method</li>
-                <li>Lack of healthcare coverage increases from 4.6% to a max of 24.9%</li>  
-                <li>Poverty % vs. Smoker % is having a <em>postive correlation of 0.520</em> using Pearson method</li>
-                <li>% of smokers increases from 9.7% to a max of 26.7% as poverty % increases</li>
-                <li>Poverty % vs. Obese % has moderate postive correlation of  0.462 is calculted using Pearson method</li>
-                <li>% of smokers increases from 21.3% to a max of 35.9% as poverty % increases</li>                  
-              </ul> -->
             </div>
             <div id="age" style="font-size:11px;">  
                 <div class = "row">
                   <div class = "col-xs-7 col-md-7 col-lg-7">
                       <h6>How does age correlate with availability of Healthcare, Smoker% and Obseity% ?</h6>
-                      <ul><li>Population Median age across 51 states varies from <strong>30.5 from 44.1 years</strong></li></ul>
+                      <ul>
+                        <li>Population Median age across 51 states varies from <strong>30.5 from 44.1 years</strong></li>
+                        <li>US average for median age is 38 years. Utah has lowest median age and Maine has highest median age </li>
+                      </ul>
                   </div>
                   <div class = "col-xs-5 col-md-5 col-lg-5">
-                    <table class="table table-striped table-sm">
-                      <thead>
-                        <th>Correlation ( Adj. r<sup>2</sup>)</th>
-                        <th>Lacks Healthcare</th>
-                        <th>Smoker %</th>
-                        <th>Obese %</th>
-                      </thead>
-                      <tbody>
-                        <td>Median Age</td>
-                        <td>-0.385</td>
-                        <td>+0.248</td>
-                        <td>-0.007 </td>
-                      </tbody>
-                    </table>
-                  </div>
+                      <ul>
+                          <li>With respect to correlation, we find that age is negatively correlated to healthcare (-0.385 r<sup>2 value)</sup></li>
+                          <li>It has a weak positive correlation with smoker % (0.248) and no correlation either way with Obseity %</li>
+                        </ul>
+                    </div>
                 </div>
               
             </div>
             <div id="income" style="font-size:11px;">  
                 <div class = "row">
                   <div class = "col-xs-7 col-md-7 col-lg-7">
-                      <h6>Correlations Discovered Between Income on Healthcare coverage, Smoker% and Obseity%</h6>
-                      <ul><li>Population Median income across 51 states varies from <strong>$39680 to $73971</strong></li></ul>
+                      <h6>Income vs. Healthcare coverage, Smoker% and Obseity%</h6>
+                      <ul>
+                        <li>Population Median income across 51 states varies from <strong>$39680 to $73971</strong></li>
+                        <li>$54453 is the average income at US level. Missippi has lowest median income and Maryland has the highest</li>
+                      </ul>
                   </div>
                   <div class = "col-xs-5 col-md-5 col-lg-5">
-                    <table class="table table-striped table-sm">
-                      <thead>
-                        <th>Correlation ( Adj. r<sup>2</sup>)</th>
-                        <th>Lacks Healthcare</th>
-                        <th>Smoker %</th>
-                        <th>Obese %</th>
-                      </thead>
-                      <tbody>
-                        <td>Median Income</td>
-                        <td>-0.434</td>
-                        <td>-0.660</td>
-                        <td>-0.651 </td>
-                      </tbody>
-                    </table>
+                    <ul>
+                        <li>As income increase, lack of healthcare % drops. Thus showing negative correlation as confirmed r<sup>2</sup> value of -0.434</li>
+                        <li>Similarly, income is negatively correlated to Smoker % (-0.660) and Obesity % (-0.651)</li>
+                      </ul>                    
                   </div>
                 </div>
               
