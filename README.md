@@ -9,7 +9,7 @@ The data set included with the assignment is based on 2014 ACS 1-year estimates:
 
 ### Step 1: Creating the initial plot layout
 
-![4-scatter](Images/scatter-initial.png)
+![scatter](DataVisualization_SVG/Images/scatter-initial.PNG)
 
 From the provided csv file, create a first-level scatter plot using Poverty% and Lack of Healthcare%.
 
