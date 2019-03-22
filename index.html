@@ -27,74 +27,62 @@
         <h1>D3Times</h1>
       </div>
     </div>
-    <div class="row" id="plot-explain">
+    <div class = "row" id="plot-hdr">
+      <div class = "col-xs-12 col-md-12">
+          <h6 id = "plot-title">Impact of Poverty on lack of Healthcare, Smoker % and Obseity %</h6>
+      </div>
+    </div>
+    <div class = "row">
+    <div class="col-xs-12 col-md-3 col-lg-3">
+      <div class="row" id="plot-explain">
       <!-- Section that provides detail on the SVG plot displayed -->
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <div class="article">          
             <div id="poverty">                
-                <div class ="row">
-                  <div class="col-xs-12 col-md-7 col-lg-7">
-                      <h6>Impact of Poverty on lack of Healthcare, Smoker % and Obseity %</h6>
-                    <ul>
-                      <li>Poverty % varies from <strong>9.2% from 21.5%</strong> across 51 states</li>
-                      <li>The US average is at 14.9% with New Hampshire at the lower end and Missippi at higher end</li>
-                    </ul>                    
-                  </div>
-                  <div class = "col-xs-12 col-md-5 col-lg-5">
-                    <ul>
-                        <li>A positive correlation exist between Povetry and 3 Y-axis factors (healthcare, smoker rate and Obesity % )</li>
-                        <li>Using Pearson method we see that r<sup>2</sup> values are 0.525, 0.520 and 0.462 for healthcare, smoker % and Obese% respectively</li>
-                    </ul>
-                  </div>
+                    <div>
+                      <p>Poverty % varies from <strong>9.2% from 21.5%</strong> across 51 states</p>
+                      <p>The US average is at 14.9% with New Hampshire at the lower end and Missippi at higher end</p>
+                    
+                        <p>A positive correlation exist between Povetry and 3 Y-axis factors (healthcare, smoker rate and Obesity % )</p>
+                        <p>Using Pearson method we see that r<sup>2</sup> values are 0.525, 0.520 and 0.462 for healthcare, smoker % and Obese% respectively</p>
+                    </div>
+                  
                 </div>
             </div>
             <div id="age">  
-                <div class = "row">
-                  <div class = "col-xs-7 col-md-7 col-lg-7">
-                      <h6>How does age correlate with availability of Healthcare, Smoker% and Obseity% ?</h6>
-                      <ul>
-                        <li>Population Median age across 51 states varies from <strong>30.5 from 44.1 years</strong></li>
-                        <li>US average for median age is 38 years. Utah has lowest median age and Maine has highest median age </li>
-                      </ul>
-                  </div>
-                  <div class = "col-xs-5 col-md-5 col-lg-5">
-                      <ul>
-                          <li>With respect to correlation, we find that age is negatively correlated to healthcare (-0.385 r<sup>2 value)</sup></li>
-                          <li>It has a weak positive correlation with smoker % (0.248) and no correlation either way with Obseity %</li>
-                        </ul>
-                    </div>
+                      <div>
+                        <p>Population Median age across 51 states varies from <strong>30.5 from 44.1 years</strong></p>
+                        <p>US average for median age is 38 years. Utah has lowest median age and Maine has highest median age </p>
+                      
+                          <p>With respect to correlation, we find that age is negatively correlated to healthcare (-0.385 r<sup>2 value)</sup></p>
+                          <p>It has a weak positive correlation with smoker % (0.248) and no correlation either way with Obseity %</p>
+                        </div>
+                   
                 </div>
               
             </div>
             <div id="income">  
-                <div class = "row">
-                  <div class = "col-xs-7 col-md-7 col-lg-7">
-                      <h6>Income vs. Healthcare coverage, Smoker% and Obseity%</h6>
-                      <ul>
-                        <li>Population Median income across 51 states varies from <strong>$39680 to $73971</strong></li>
-                        <li>$54453 is the average income at US level. Missippi has lowest median income and Maryland has the highest</li>
-                      </ul>
-                  </div>
-                  <div class = "col-xs-5 col-md-5 col-lg-5">
-                    <ul>
-                        <li>As income increase, lack of healthcare % drops. Thus showing negative correlation as confirmed r<sup>2</sup> value of -0.434</li>
-                        <li>Similarly, income is negatively correlated to Smoker % (-0.660) and Obesity % (-0.651)</li>
-                      </ul>                    
-                  </div>
+                <div>
+                        <p>Population Median income across 51 states varies from <strong>$39680 to $73971</strong></p>
+                        <p>$54453 is the average income at US level. Missippi has lowest median income and Maryland has the highest</p>
+                     
+                        <p>As income increase, lack of healthcare % drops. Thus showing negative correlation as confirmed r<sup>2</sup> value of -0.434</p>
+                        <p>Similarly, income is negatively correlated to Smoker % (-0.660) and Obesity % (-0.651)</p>
+                      </div>                    
+                  
                 </div>
               
             </div>
           </div>
-        </div>
-      </div>
+    <div class="col-xs-12 col-md-9 col-lg-9">
     <div class="row" id="svg-container-div">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div id="scatter" class="svg-container">
           <!-- We append our chart here. -->
         </div>
       </div>
-    </div>
-   
+    </div></div>
+  </div>
   </div>
 
   <!-- Footer-->

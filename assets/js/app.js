@@ -243,7 +243,15 @@ function addEvntListenerXY(lblsGrp, chosenValue, addTo, svgObjects){
 };
 
 // Function to render the correct plot explanations in the div above SVG
-function togglePlotExplanation(chosenXAxis){
+function togglePlotExplanation(chosenXAxis, chosenYAxis){
+  // Change header text based on the chosen XAxis and Y Axis
+  var xTxt = {}
+    , yTxt = {};
+  xAxLbls.map(d => xTxt[d.lbl] = d.lbltxt);
+  yAxLbls.map(d => yTxt[d.lbl] = d.lbltxt);
+  // var yTxt = yAxLbls.map(d => {if(d.lbl === chosenYAxis) return d.lbltxt});
+  var plot_hdr = d3.select("#plot-title")
+                  .text(`Correlation between ${xTxt[chosenXAxis]} and ${yTxt[chosenYAxis]}`);
   // Based on chosen x axis value, only make the relevant div section visible and do not display the others
   switch(chosenXAxis){
     case "age":
@@ -299,7 +307,7 @@ function updatePlot(inputData,xParam, yParam, xAxis, yAxis, circlesGroup, circle
     renderToolTip(circlesGroup, xParam, yParam);
 
     // Render Plot Explanations
-    togglePlotExplanation(xParam);
+    togglePlotExplanation(xParam, yParam);
 
     // changes classes to change bold text
     Object.entries(xLblsObj).map(([key,value]) => {
@@ -364,7 +372,7 @@ function renderPlot(censusData, xParam = "poverty", yParam = "healthcare"){
       var yLblsGrp = renderLabels(chartGroup,"yAxis",xParam, yParam);
 
       // Render Plot Explanation based on the chosen X axis value
-      togglePlotExplanation(xParam);
+      togglePlotExplanation(xParam, yParam);
 
       // Construct an array of svgObjects to pass onto the event listener
       var svgObjects = {
