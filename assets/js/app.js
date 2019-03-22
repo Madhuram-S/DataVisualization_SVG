@@ -41,7 +41,7 @@ function createSVGArea(){
    d3.select("#scatter")
     .append("svg")
     .attr("preserveAspectRatio", "xMinYMin meet")
-    .attr("viewBox","-120 0 975 1200")
+    .attr("viewBox","0 0 700 700")
     .attr("class", "svg-content")
   )
 };
