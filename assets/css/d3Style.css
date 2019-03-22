@@ -1,6 +1,6 @@
 .aText {
   font-family: sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   text-anchor: middle;
 }
 
@@ -13,6 +13,7 @@
 }
 
 .active {
+  
   font-weight: bold;
   fill: #000; 
   transition: fill 0.3s ease-out;
@@ -98,12 +99,12 @@
   font-size: 11px;
 }
 
-#plot-explain{
+  #plot-explain{ 
   background-color: #333333;
   padding-top:5px;
   padding-right:120px; 
   margin: 2px 0px 0px 0px;
-  font-size:10px;
+  /* font-size:10px; */
 }
 
 
@@ -111,6 +112,7 @@
   display:block;
   color:#f5f5f5;
   background-color: #333333;
+  font-size:0.75vw;
   /* padding:10px; */
   /* margin: 10px 00px 0px 0px;  */
 }
@@ -134,7 +136,7 @@
     padding-top:5px;
     padding-right:120px; 
     margin: 2px 0px 0px 0px;
-    font-size:10px;
+    /* font-size:10px; */
   }
 
 
@@ -151,7 +153,7 @@
   padding-top:5px;
   padding-right:120px; 
   margin: 2px 0px 0px 0px;
-  font-size:8px;
+  /* font-size:8px; */
 }
 
 

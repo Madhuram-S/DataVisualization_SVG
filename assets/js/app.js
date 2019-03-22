@@ -1,4 +1,4 @@
-// Set global variables (SVG dimensions to calculate chart margins)
+// Set global variables (strictly only to calculate chart margins)
 var svgWidth = 700;
 var svgHeight = 500;
 
@@ -17,7 +17,15 @@ var chartHeight = svgHeight - margin.top - margin.bottom;
 // Define x and y labels object
 var xLblsObj = {};
 var yLblsObj = {};
+var xAxLbls = [{"lbl":"poverty", "pos":20, "lbltxt":"In Poverty (%)"},
+                {"lbl":"age","pos":40,"lbltxt": "Median Age (yrs)"},
+                {"lbl":"income","pos":60,"lbltxt":"Median Income (USD)"}];
+var yAxLbls = [{"lbl":"healthcare", "pos":60, "lbltxt":"Lacks Healthcare(%)"},
+                {"lbl":"smokes","pos":40,"lbltxt": "Smokes (%)"},
+                {"lbl":"obesity","pos":20,"lbltxt":"Obesity (%)"}];              
 
+
+// ###################### DEFINE HELPER FUNCTIONS ########################
 // function to create entire SVG area
 function createSVGArea(){
   // if the SVG area isn't empty when the browser loads, remove it
@@ -33,7 +41,7 @@ function createSVGArea(){
    d3.select("#scatter")
     .append("svg")
     .attr("preserveAspectRatio", "xMinYMin meet")
-    .attr("viewBox","0 0 700 700")
+    .attr("viewBox","-120 0 975 1200")
     .attr("class", "svg-content")
   )
 };
@@ -91,23 +99,47 @@ function renderYAxes(newYScale, yAxis) {
 };
 
 // function used for updating circles group with a transition to new circles
-function renderCircles(circlesGroup, newXScale, newYScale, chosenXaxis, chosenYaxis) {
-
-  circlesGroup.transition()
-    .duration(1000)
-    .attr("cx", d => newXScale(d[chosenXaxis]))
-    .attr("cy", d => newYScale(d[chosenYaxis]));
-
+function renderCircles(circlesGroup, xScale, yScale, chosenXaxis, chosenYaxis, mode = "create") {
+    if(mode === "create"){
+      // Scatter plot : append circles to data points      
+      circlesGroup = circlesGroup 
+          .enter()
+          .append("circle")
+          .attr("cx", (d, i) => xScale(d[chosenXaxis]))
+          .attr("cy", d => yScale(d[chosenYaxis]))
+          .attr("r", "10")
+          .attr("class", "scatter-point");
+    }
+    else{
+      // Else update circles group to new x or y values
+      console.log("in update section")
+      circlesGroup.transition()
+        .duration(1000)
+        .attr("cx", d => xScale(d[chosenXaxis]))
+        .attr("cy", d => yScale(d[chosenYaxis]));
+    }
   return circlesGroup;
 };
 // Function to update the position of the ST code within circles
-function renderCirclesTxt(txtGrp, newXScale, newYScale, chosenXaxis, chosenYaxis) {
-
-  txtGrp.transition()
-    .duration(1000)
-    .attr("x", (d, i) => newXScale(d[chosenXaxis]))
-    .attr("y", d => newYScale(d[chosenYaxis]));
-
+function renderCirclesTxt(txtGrp, xScale, yScale, chosenXaxis, chosenYaxis, mode="create") {
+    if(mode === "create")
+    {
+      txtGrp = txtGrp
+          .enter()
+          .append("text")
+          .text(d => d.abbr)
+          .attr("x", (d, i) => xScale(d[chosenXaxis]))
+          .attr("y", d => yScale(d[chosenYaxis]))
+          .attr("text-anchor", "middle")
+          .attr('alignment-baseline', 'middle')
+          .attr("class","scatter-txt");          
+    }
+    else{
+      txtGrp.transition()
+        .duration(1000)
+        .attr("x", (d, i) => xScale(d[chosenXaxis]))
+        .attr("y", d => yScale(d[chosenYaxis]));
+    }
   return txtGrp;
 };
 // Function to render Tooltip
@@ -148,81 +180,66 @@ cirGrp.on("mouseover", function(d) {
   });
 } ;
 
-// Function to render X labels
-function renderXlabels(chartGroup){  
-  // Create objects for x labels
-  var xLblsGrp = chartGroup.append("g")             
-  .attr("transform",
-        "translate(" + (chartWidth/2) + " ," + 
-                      (chartHeight + margin.top+5) + ")");
+function renderLabels(chartGroup, whichAxis = "xAxis", chosenXAxis, chosenYAxis){
+  var lblsGrp;
+  console.log(chosenXAxis);
+  if(whichAxis === "xAxis"){
+    // Create objects for x labels
+      var lblsGrp = chartGroup.append("g")             
+      .attr("transform",
+            "translate(" + (chartWidth/2) + " ," + 
+                          (chartHeight + margin.top+5) + ")");
+    // populate labels
+    xAxLbls.forEach(i => { 
+          xLblsObj[i.lbl] = lblsGrp.append("text")
+            .attr("x", 0)
+            .attr("y", i.pos)
+            .attr("value", i.lbl) // value to grab for event listener
+            .attr("class", function(d){return(i.lbl === chosenXAxis ? " aText active":"aText inactive")})            
+            .style("text-anchor", "middle")
+            .text(i.lbltxt);            
+    });
+  }
+  else{
+      // text label object for the y axis
+      var lblsGrp = chartGroup.append("g")
+      .attr("transform", "rotate(-90)")  
   
+      yAxLbls.forEach(i => {
+        yLblsObj[i.lbl] = lblsGrp.append("text")
+        .attr("y", 0 - margin.left + i.pos)
+        .attr("x",0 - (chartHeight / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .attr("value", i.lbl) // value to grab for event listener
+        .attr("class", function(d){return(i.lbl === chosenYAxis ? "aText active":"aText inactive")})        
+        .text(i.lbltxt);
+      })
+  }
+  return lblsGrp;
+}
 
-  xLblsObj["poverty"] = xLblsGrp.append("text")
-    .attr("x", 0)
-    .attr("y", 20)
-    .attr("value", "poverty") // value to grab for event listener
-    .classed("aText", true)
-    .classed("active", true)
-    .style("text-anchor", "middle")
-    .text("In Poverty (%)");
-
-    xLblsObj["age"] = xLblsGrp.append("text")
-    .attr("x", 0)
-    .attr("y", 35)
-    .attr("value", "age") // value to grab for event listener
-    .classed("aText", true)
-    .classed("inactive", true)
-    .style("text-anchor", "middle")
-    .text("Median Age (Yrs)");
-
-    xLblsObj["income"] = xLblsGrp.append("text")
-    .attr("x", 0)
-    .attr("y", 50)
-    .attr("value", "income") // value to grab for event listener
-    .classed("aText", true)
-    .classed("inactive", true)
-    .style("text-anchor", "middle")
-    .text("Median Income (USD)");
-
-    return xLblsGrp;
-
-
-};
-// Function to render Y Labels
-function renderYlabels(chartGroup){
-  // text label object for the y axis
-  var yLblsGrp = chartGroup.append("g")
-  .attr("transform", "rotate(-90)")  
-
-  yLblsObj["healthcare"] = yLblsGrp.append("text")
-    .attr("y", 0 - margin.left + 60)
-    .attr("x",0 - (chartHeight / 2))
-    .attr("dy", "1em")
-    .style("text-anchor", "middle")
-    .attr("value", "healthcare") // value to grab for event listener
-    .classed("aText", true)
-    .classed("active", true)
-    .text("Lacks Healthcare (%)");
-
-    yLblsObj["smokes"] = yLblsGrp.append("text")
-    .attr("y", 0 - margin.left + 55)
-    .attr("x",0 - (chartHeight / 2))
-    .attr("value", "smokes") // value to grab for event listener
-    .classed("aText", true)
-    .classed("inactive", true)
-    .text("Smokes (%)");
-
-    yLblsObj["obesity"] = yLblsGrp.append("text")
-    .attr("y", 0 - margin.left +37)
-    .attr("x",0 - (chartHeight / 2))
-    .attr("value", "obesity") // value to grab for event listener
-    .classed("aText", true)
-    .classed("inactive", true)
-    .text("Obsese (%)");
-
-    return yLblsGrp;
-
-
+// Add Event Listener to X and Y axis
+function addEvntListenerXY(lblsGrp, chosenValue, addTo, svgObjects){
+  lblsGrp.selectAll("text")
+      .on("click", function() {
+        // get value of selection
+          var value = d3.select(this).attr("value");
+          
+          if(addTo === "xAxis")
+          {
+            value !== svgObjects.xParam ? svgObjects.xParam = value: svgObjects.xParam = svgObjects.xParam;            
+          }
+          else{
+            value !== svgObjects.yParam ? svgObjects.yParam = value: svgObjects.yParam = svgObjects.yParam;
+          }
+          
+          // Call updatePlot () to refresh the plot based on user input
+            updatePlot(svgObjects.censusData, svgObjects.xParam, svgObjects.yParam, 
+              svgObjects.xAxis, svgObjects.yAxis, 
+              svgObjects.circlesGroup, svgObjects.circleTxtGrp, "update");         
+        
+      });
 };
 
 // Function to render the correct plot explanations in the div above SVG
@@ -265,7 +282,7 @@ function togglePlotExplanation(chosenXAxis){
 
 };
 // Function to update plot based on user input (click of xAxis or yAxis labels)
-function updatePlot(inputData,xParam, yParam, xAxis, yAxis, circlesGroup, circleTxtGrp ){
+function updatePlot(inputData,xParam, yParam, xAxis, yAxis, circlesGroup, circleTxtGrp, mode = "update" ){
     // updates x & y scale for new data
     xNewScale = renderXScale(inputData, xParam);
     yNewScale = renderYScale(inputData, yParam);
@@ -275,8 +292,8 @@ function updatePlot(inputData,xParam, yParam, xAxis, yAxis, circlesGroup, circle
     yAxis = renderYAxes(yNewScale, yAxis);
 
     // updates circles with new x values
-    circlesGroup = renderCircles(circlesGroup, xNewScale,yNewScale, xParam, yParam);
-    circleTxtGrp = renderCirclesTxt(circleTxtGrp,xNewScale,yNewScale, xParam, yParam )
+    circlesGroup = renderCircles(circlesGroup, xNewScale,yNewScale, xParam, yParam, "update");
+    circleTxtGrp = renderCirclesTxt(circleTxtGrp,xNewScale,yNewScale, xParam, yParam, "update");
 
     // updates tooltips with new info
     renderToolTip(circlesGroup, xParam, yParam);
@@ -285,45 +302,18 @@ function updatePlot(inputData,xParam, yParam, xAxis, yAxis, circlesGroup, circle
     togglePlotExplanation(xParam);
 
     // changes classes to change bold text
-    Object.entries(xLblsObj).map(([key,value]) => 
-                    {
-                      if (key == xParam) {
-                        value
-                        .classed("active", true)
-                        .classed("inactive", false);
-                      }
-                      else
-                      {
-                        value
-                            .classed("active", false)
-                            .classed("inactive", true);
-                      }
-                    });
+    Object.entries(xLblsObj).map(([key,value]) => {
+              return(key == xParam ? value.attr("class","aText active"):value.attr("class","aText inactive"))
+                  });
 
     Object.entries(yLblsObj).map(([key, value]) => {
-                    if (key == yParam) {
-                      value
-                      .classed("active", true)
-                      .classed("inactive", false);
-                    }
-                    else
-                    {
-                      value
-                          .classed("active", false)
-                          .classed("inactive", true);
-                    }
+      return(key == yParam ? value.attr("class","aText active"):value.attr("class","aText inactive"))                    
                   });
 };
 
 // Main function to render the plot by reading data from CSV
-function renderPlot(xParam = "poverty", yParam = "healthcare"){
-
-  // create svg area - preparation to display data
-  var svg = createSVGArea();
-  var chartGroup = createSVG_GRP(svg);
+function renderPlot(censusData, xParam = "poverty", yParam = "healthcare"){
   
-  //Load data from csv
-  d3.csv("./assets/data/data.csv").then(function(censusData){ 
     // load data from CSV and format numeric fields
     console.log(censusData);
     censusData.forEach(function(row){
@@ -334,7 +324,11 @@ function renderPlot(xParam = "poverty", yParam = "healthcare"){
         row.obesity = +row.obesity;
         row.smokes = +row.smokes;
         row.abbr = row.abbr;
-      })
+    });
+      // create svg area - preparation to display data
+      var svg = createSVGArea();
+      var chartGroup = createSVG_GRP(svg);
+  
       // #################### Begin Plotting #################      
       // Obtain scale based on x and y axis selection
       xScale = renderXScale(censusData, xParam);
@@ -356,73 +350,49 @@ function renderPlot(xParam = "poverty", yParam = "healthcare"){
       .call(leftAxis);
       
       // Scatter plot : append circles to data points      
-      var circlesGroup = chartGroup.append("g").selectAll("circle")
-          .data(censusData)
-          .enter()
-          .append("circle")
-          .attr("cx", (d, i) => xScale(d[xParam]))
-          .attr("cy", d => yScale(d[yParam]))
-          .attr("r", "10")
-          .attr("class", "scatter-point");
-
-          // display state code within scatter
-          var circleTxtGrp = chartGroup.append("g").selectAll("text")
-              .data(censusData)
-              .enter()
-              .append("text")
-              .text(d => d.abbr)
-              .attr("x", (d, i) => xScale(d[xParam]))
-              .attr("y", d => yScale(d[yParam]))
-              .attr("text-anchor", "middle")
-              .attr('alignment-baseline', 'middle')
-              .attr("class","scatter-txt");
+      var circlesGroup = chartGroup.append("g").selectAll("circle").data(censusData)
+      // display state code within scatter
+      var circleTxtGrp = chartGroup.append("g").selectAll("text").data(censusData)
+      
+      circlesGroup = renderCircles(circlesGroup, xScale, yScale, xParam, yParam, "create");                                   
+      circleTxtGrp = renderCirclesTxt(circleTxtGrp, xScale, yScale, xParam, yParam, "create");
+      // Create / Update tooltip
+      renderToolTip(circlesGroup,xParam, yParam)
           
-              // Create / Update tooltip
-              renderToolTip(circlesGroup,xParam, yParam)
-          
-      // Render x and y labels
-      var xLblsGrp = renderXlabels(chartGroup);
-      var yLblsGrp = renderYlabels(chartGroup);
+      // Render x and y labels     
+      var xLblsGrp = renderLabels(chartGroup,"xAxis",xParam, yParam);
+      var yLblsGrp = renderLabels(chartGroup,"yAxis",xParam, yParam);
 
       // Render Plot Explanation based on the chosen X axis value
       togglePlotExplanation(xParam);
-      // ################################### End of Plot #########################################
-      // #################### Begin Event Listnening ###################################
-      // Listen to on-click event labels
-      // x axis labels event listener
-      xLblsGrp.selectAll("text")
-      .on("click", function() {
-        // get value of selection
-        var value = d3.select(this).attr("value");
-        if (value !== xParam) {
-          // replaces xParam with value
-          xParam = value;
-          // Call updatePlot () to refresh the plot based on user input
-          updatePlot(censusData, xParam, yParam, xAxis, yAxis, circlesGroup, circleTxtGrp);          
-        }
-      });
 
-      // y axis labels event listener
-      yLblsGrp.selectAll("text")
-      .on("click", function() {
-        // get value of selection
-        var value = d3.select(this).attr("value");
-        if (value !== yParam) {
-            // replaces yParam with value
-          yParam = value;
-          // Update plot using new chosen value for Y Axis
-          updatePlot(censusData, xParam, yParam, xAxis, yAxis, circlesGroup, circleTxtGrp);          
-        }
-      });
-      // #################### End Event Listnening ###################################
-  })
-  .catch(function(error){
-    // Any error encountered will be thrown into console log
-    console.log(error);
-    throw error;
-  });
+      // Construct an array of svgObjects to pass onto the event listener
+      var svgObjects = {
+        "censusData" :censusData, "xParam" : xParam,  "yParam" : yParam, 
+        "xAxis" : xAxis, "yAxis": yAxis, "circlesGroup": circlesGroup, 
+        "circlesGroup": circlesGroup, "circleTxtGrp": circleTxtGrp
+      }
+
+      // Attach event listening to X and Y axis
+      addEvntListenerXY(xLblsGrp, xParam, addTo = "xAxis", svgObjects)
+      addEvntListenerXY(yLblsGrp, yParam, addTo = "yAxis", svgObjects)
+      // ################################### End of Plot #########################################
+    
 // #################### End of d3.csv function ###################################
 };
+// function that initializes whole logic from reading data to displayng plot
+function init(){
+  // Capture the promise variable by reading the csv file
+  var svgData = d3.csv("./assets/data/data.csv")
 
-// Provide the initial x and y axis to plot
-renderPlot("poverty","healthcare");
+  // Render the plot once captured
+  svgData.then(data => renderPlot(data, "poverty","healthcare"))        
+        .catch(function(error){
+            // Any error encountered will be thrown into console log
+            console.log(error);
+            throw error;
+          });
+
+}
+// Initialize plot routine
+init();
